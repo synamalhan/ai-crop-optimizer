@@ -15,14 +15,24 @@ c2.markdown(
 df = bg.load_csv()
 labels = bg.get_labels(df)
 
+container = st.container(border=True)
+
 form = st.form("Soil Prediction")
 c1, c2 = form.columns(2)
 location = c1.text_input("Location:")
 crop = c2.selectbox("Plant", labels)
+
 if form.form_submit_button("Submit"):
-    form.success("submitted")
-    st.write("Location", location)
-    st.write("Crop:", crop)
 
     temp_c, humid, rain = bg.get_current_weather(location)
-    st.write("Temperature: ", temp_c, " Humidity: ", humid, " Rainfall: ", rain)
+    cc1, cc2, cc3 = container.columns(3)
+
+    cc1.write("Temperature: " + str(temp_c))
+    cc2.write(" Humidity: " + str(humid))
+    cc3.write(" Rainfall: " + str(rain))
+
+    N, P, K, pH = bg.xgb_regressor(temp_c, humid, rain, crop.lower())
+
+    container.subheader(
+        "Best Soil Comp: " + str(N) + " " + str(P) + " " + str(K) + " " + str(pH)
+    )

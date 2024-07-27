@@ -10,6 +10,8 @@ c2.markdown(
     "<h1 style='text-align: center;'>Ideal Crop Predictor</h1>", unsafe_allow_html=True
 )
 
+container = st.container(border=True)
+
 form = st.form("Crop Prediction")
 
 location = form.text_input("Location:")
@@ -20,12 +22,13 @@ P = c2.text_input("Soil P%:")
 K = c3.text_input("Soil K%:")
 pH = c4.text_input("Soil pH:")
 if form.form_submit_button("Submit"):
-    form.success("Submitted")
-    st.write("Location: ", location)
-    st.write("Soil N%: ", N)
-    st.write("Soil P%: ", P)
-    st.write("Soil K%: ", K)
-    st.write("Soil pH: ", pH)
 
     temp_c, humid, rain = bk.get_current_weather(location)
-    st.write("Temperature: ", temp_c, " Humidity: ", humid, " Rainfall: ", rain)
+    cc1, cc2, cc3 = container.columns(3)
+    cc1.write("Temperature: ", temp_c)
+    cc2.write(" Humidity: ", humid)
+    cc3.write(" Rainfall: ", rain)
+
+    crop = bk.random_forest_classifier(N, P, K, temp_c, humid, rain, pH)
+
+    container.subheader("Best Crop: ", crop)
