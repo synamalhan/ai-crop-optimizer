@@ -2,7 +2,7 @@ import joblib
 import requests
 import pandas as pd
 
-api_key = "ba2998b9ecae4744a17195124242707"
+api_key = ""
 
 
 def load_csv():
