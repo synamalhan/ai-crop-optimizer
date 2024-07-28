@@ -9,18 +9,7 @@ from PIL import Image
 c1, c2, c3 = st.columns([1, 6, 1])
 
 # Define the image path
-image_path = os.path.join(os.path.dirname(__file__), "../assets/logo.png")
-
-# Check if the image file exists
-if os.path.exists(image_path):
-    try:
-        # Open the image
-        img = Image.open(image_path)
-        c1.image(img, use_column_width=True)
-    except Exception as e:
-        st.error(f"Error loading image: {e}")
-else:
-    st.error("Image file not found.")
+c1.image(os.path.join(os.path.dirname(__file__), "../assets/logo.png"), width=120)
 
 c2.markdown("<h1 style='text-align: center;'>CropGenius</h1>", unsafe_allow_html=True)
 
