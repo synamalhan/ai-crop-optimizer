@@ -8,7 +8,7 @@ import os
 import pickle
 
 
-@st.cache_data
+@st.cache_resource
 def load_model_with_pickle(file_path):
     try:
         with open(file_path, "rb") as f:
