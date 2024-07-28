@@ -4,16 +4,18 @@ import pandas as pd
 from scipy.spatial import distance
 import numpy as np
 import streamlit as st
+import os
 
 
 api_key = st.secrets["api-key"]
 
 
 def load_csv():
+    current_dir = os.path.dirname(__file__)
+    csv_path = os.path.join(current_dir, "data", "Crop_recommendation.csv")
+
     # Load dataset from CSV file
-    df = pd.read_csv(
-        "https://github.com/synamalhan/ai-crop-optimizer/blob/197954692f89d54c95c5a1ee8a6fcf88f98a8c92/data/Crop_recommendation.csv"
-    )
+    df = pd.read_csv(csv_path)
 
     return df
 
@@ -25,11 +27,11 @@ def get_labels(df):
 
 
 def random_forest_classifier(N, P, K, temp, humid, rain, ph):
-    rf_model = joblib.load(
-        "https://github.com/synamalhan/ai-crop-optimizer/blob/197954692f89d54c95c5a1ee8a6fcf88f98a8c92/models/rf_model.pkl"
-    )
+    current_dir = os.path.dirname(__file__)
+
+    rf_model = joblib.load((os.path.join(current_dir, "models", "rf_model.pkl")))
     label_encoder = joblib.load(
-        "https://github.com/synamalhan/ai-crop-optimizer/blob/197954692f89d54c95c5a1ee8a6fcf88f98a8c92/models/label_encoder.pkl"
+        (os.path.join(current_dir, "models", "label_encoder.pkl"))
     )
 
     new_data = {
@@ -50,15 +52,15 @@ def random_forest_classifier(N, P, K, temp, humid, rain, ph):
 
 
 def xgb_regressor(temp, humid, rain, crop):
+    current_dir = os.path.dirname(__file__)
+
     xgb_regressor = joblib.load(
-        "https://github.com/synamalhan/ai-crop-optimizer/blob/197954692f89d54c95c5a1ee8a6fcf88f98a8c92/models/xgb_regressor.pkl"
+        (os.path.join(current_dir, "models", "xgb_regressor.pkl"))
     )
     label_encoder = joblib.load(
-        "https://github.com/synamalhan/ai-crop-optimizer/blob/197954692f89d54c95c5a1ee8a6fcf88f98a8c92/models/label_encoder.pkl"
+        (os.path.join(current_dir, "models", "label_encoder.pkl"))
     )
-    scaler = joblib.load(
-        "https://github.com/synamalhan/ai-crop-optimizer/blob/197954692f89d54c95c5a1ee8a6fcf88f98a8c92/models/scaler.pkl"
-    )
+    scaler = joblib.load((os.path.join(current_dir, "models", "scaler.pkl")))
 
     new_soil_data = {
         "temperature": [temp],
@@ -82,9 +84,9 @@ def xgb_regressor(temp, humid, rain, crop):
 
 
 def soil_type_classifier(N, K, P, pH):
-    new_dataset = pd.read_csv(
-        "https://github.com/synamalhan/ai-crop-optimizer/blob/197954692f89d54c95c5a1ee8a6fcf88f98a8c92/data/soil_data.csv"
-    )
+    current_dir = os.path.dirname(__file__)
+    csv_path = os.path.join(current_dir, "data", "soil_data.csv")
+    new_dataset = pd.read_csv(csv_path)
 
     predicted_npkph = [N, P, K, pH]
 

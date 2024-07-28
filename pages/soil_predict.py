@@ -4,6 +4,9 @@ import plotly.figure_factory as ff
 import joblib
 import plotly.express as px
 from sklearn.metrics import r2_score
+import os
+
+current_dir = os.path.dirname(__file__)
 
 
 # Load data and labels
@@ -11,14 +14,12 @@ df = bg.load_csv()
 labels = bg.get_labels(df)
 
 xgb_regressor = joblib.load(
-    "https://github.com/synamalhan/ai-crop-optimizer/blob/197954692f89d54c95c5a1ee8a6fcf88f98a8c92/models/xgb_regressor.pkl"
+    (os.path.join(current_dir, "..", "models", "xgb_regressor.pkl"))
 )
 label_encoder = joblib.load(
-    "https://github.com/synamalhan/ai-crop-optimizer/blob/197954692f89d54c95c5a1ee8a6fcf88f98a8c92/models/label_encoder.pkl"
+    (os.path.join(current_dir, "..", "models", "label_encoder.pkl"))
 )
-scaler = joblib.load(
-    "https://github.com/synamalhan/ai-crop-optimizer/blob/197954692f89d54c95c5a1ee8a6fcf88f98a8c92/models/scaler.pkl"
-)
+scaler = joblib.load((os.path.join(current_dir, "..", "models", "scaler.pkl")))
 
 
 # Layout for header and navigation
@@ -26,7 +27,7 @@ c1, c2, c3 = st.columns([1, 6, 1])
 c1.page_link("pages/home.py", icon=":material/home:")
 c3.page_link("pages/crop_predict.py", icon=":material/psychiatry:")
 c1.image(
-    "https://github.com/synamalhan/ai-crop-optimizer/blob/197954692f89d54c95c5a1ee8a6fcf88f98a8c92/assets/logo.png",
+    (os.path.join(current_dir, "..", "assets", "logo.png")),
     width=100,
 )
 c2.write("")
