@@ -8,6 +8,7 @@ import os
 import pickle
 
 
+@st.cache_data
 def load_model_with_pickle(file_path):
     try:
         with open(file_path, "rb") as f:
@@ -21,6 +22,7 @@ def load_model_with_pickle(file_path):
 api_key = st.secrets["api-key"]
 
 
+@st.cache_data
 def load_csv():
     current_dir = os.path.dirname(__file__)
     csv_path = os.path.join(current_dir, "data", "Crop_recommendation.csv")
