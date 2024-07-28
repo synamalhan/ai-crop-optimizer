@@ -5,17 +5,16 @@ from sklearn.metrics import accuracy_score, classification_report
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.metrics import mean_squared_error, r2_score
 from xgboost import XGBRegressor
-import joblib
+import pickle
 
 # Load your CSV file into a pandas DataFrame
-df = pd.read_csv("Crop_recommendation.csv")
+df = pd.read_csv("data/Crop_recommendation.csv")
 
 # Encode the labels if they are not numeric
 label_encoder = LabelEncoder()
 df["label"] = label_encoder.fit_transform(df["label"])
 
-
-# --------------------------- Random Forest Classifier-------------------------------------
+# --------------------------- Random Forest Classifier -------------------------------------
 
 # Split the data into features and labels
 X = df.drop("label", axis=1)
@@ -28,17 +27,14 @@ X_train, X_test, y_train, y_test = train_test_split(
 rf_model = RandomForestClassifier(n_estimators=100, random_state=42)
 rf_model.fit(X_train, y_train)
 
-# # Evaluate the model
-# y_pred = rf_model.predict(X_test)
-# print(f"Accuracy: {accuracy_score(y_test, y_pred)}")
-# print(classification_report(y_test, y_pred))
-
 # Save the trained model and the label encoder
-joblib.dump(rf_model, "rf_model.pkl")
+with open("rf_model.pkl", "wb") as f:
+    pickle.dump(rf_model, f)
 
+with open("label_encoder.pkl", "wb") as f:
+    pickle.dump(label_encoder, f)
 
 # -------------------------- XGBRegressor -----------------------------------------------
-
 
 # Define features and targets
 X = df[["temperature", "humidity", "rainfall", "label"]]
@@ -59,12 +55,9 @@ xgb_regressor = XGBRegressor(
 )
 xgb_regressor.fit(X_train, y_train)
 
-# # Evaluate the model
-# y_pred = xgb_regressor.predict(X_test)
-# print(f"Regression MSE: {mean_squared_error(y_test, y_pred)}")
-# print(f"Regression R^2: {r2_score(y_test, y_pred)}")
+# Save the trained model and scaler
+with open("xgb_regressor.pkl", "wb") as f:
+    pickle.dump(xgb_regressor, f)
 
-# Save the trained model, label encoder, and scaler
-joblib.dump(xgb_regressor, "xgb_regressor.pkl")
-joblib.dump(label_encoder, "label_encoder.pkl")
-joblib.dump(scaler, "scaler.pkl")
+with open("scaler.pkl", "wb") as f:
+    pickle.dump(scaler, f)

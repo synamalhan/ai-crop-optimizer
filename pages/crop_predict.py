@@ -1,3 +1,4 @@
+from sklearn.calibration import LabelEncoder
 import streamlit as st
 import backend as bk
 import plotly.figure_factory as ff
@@ -13,15 +14,33 @@ from sklearn.metrics import (
 )
 import joblib
 import os
+import pickle
+
+
+def load_model_with_pickle(file_path):
+    try:
+        with open(file_path, "rb") as f:
+            model = pickle.load(f)
+        return model
+    except Exception as e:
+        print(f"Error loading model with pickle: {e}")
+        return None
+
 
 current_dir = os.path.dirname(__file__)
 
 
 df = bk.load_csv()
-model = joblib.load((os.path.join(current_dir, "..", "models", "rf_model.pkl")))
-label_encoder = joblib.load(
+model = load_model_with_pickle(
+    (os.path.join(current_dir, "..", "models", "rf_model.pkl"))
+)
+label_encoder = load_model_with_pickle(
     (os.path.join(current_dir, "..", "models", "label_encoder.pkl"))
 )
+
+
+if not isinstance(label_encoder, LabelEncoder):
+    st.error("The loaded label_encoder is not an instance of LabelEncoder.")
 
 X = df[["N", "P", "K", "temperature", "humidity", "ph", "rainfall"]]
 
