@@ -25,29 +25,7 @@ import requests
 st.markdown(
     """
     <style>
-    .css-1aumxhk:hover {
-        width: 220px;
-    }
-    /* Customize sidebar title */
-    .css-12ttj6m {
-        font-size: 24px;
-        text-align: center;
-        color: #4CAF50;
-        margin-bottom: 20px;
-    }
-    /* Customize sidebar radio buttons */
-    .css-1d391kg {
-        font-size: 18px;
-        margin: 10px 0;
-        display: block;
-        text-decoration: none;
-        color: black;
-        transition: color 0.3s, text-decoration 0.3s;
-    }
-    .css-1d391kg:hover {
-        color: #4CAF50;
-        text-decoration: underline;
-    }
+    
     .header {
         text-align: center;
         padding: 50px;
