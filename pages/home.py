@@ -5,7 +5,10 @@ import streamlit as st
 
 c1, c2, c3 = st.columns([1, 6, 1])
 
-c1.image("assets/logo.png", width=100)
+c1.image(
+    "https://github.com/synamalhan/ai-crop-optimizer/blob/197954692f89d54c95c5a1ee8a6fcf88f98a8c92/assets/logo.png",
+    width=100,
+)
 c2.markdown("<h1 style='text-align: center;'>CropGenius</h1>", unsafe_allow_html=True)
 
 c1, c2, c3 = st.columns(3)

@@ -15,8 +15,12 @@ import joblib
 
 
 df = bk.load_csv()
-model = joblib.load("models/rf_model.pkl")
-label_encoder = joblib.load("models/label_encoder.pkl")
+model = joblib.load(
+    "https://github.com/synamalhan/ai-crop-optimizer/blob/197954692f89d54c95c5a1ee8a6fcf88f98a8c92/models/rf_model.pkl"
+)
+label_encoder = joblib.load(
+    "https://github.com/synamalhan/ai-crop-optimizer/blob/197954692f89d54c95c5a1ee8a6fcf88f98a8c92/models/label_encoder.pkl"
+)
 
 X = df[["N", "P", "K", "temperature", "humidity", "ph", "rainfall"]]
 
@@ -52,7 +56,10 @@ c1.page_link("pages/home.py", icon=":material/home:")
 c3.page_link("pages/soil_predict.py", icon=":material/potted_plant:")
 c2.write("")
 c2.write("")
-c1.image("assets/logo.png", width=100)
+c1.image(
+    "https://github.com/synamalhan/ai-crop-optimizer/blob/197954692f89d54c95c5a1ee8a6fcf88f98a8c92/assets/logo.png",
+    width=100,
+)
 c2.markdown(
     "<h1 style='text-align: center;'>Ideal Crop Predictor</h1>", unsafe_allow_html=True
 )

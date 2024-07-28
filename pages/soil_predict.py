@@ -10,16 +10,25 @@ from sklearn.metrics import r2_score
 df = bg.load_csv()
 labels = bg.get_labels(df)
 
-xgb_regressor = joblib.load("models/xgb_regressor.pkl")
-label_encoder = joblib.load("models/label_encoder.pkl")
-scaler = joblib.load("models/scaler.pkl")
+xgb_regressor = joblib.load(
+    "https://github.com/synamalhan/ai-crop-optimizer/blob/197954692f89d54c95c5a1ee8a6fcf88f98a8c92/models/xgb_regressor.pkl"
+)
+label_encoder = joblib.load(
+    "https://github.com/synamalhan/ai-crop-optimizer/blob/197954692f89d54c95c5a1ee8a6fcf88f98a8c92/models/label_encoder.pkl"
+)
+scaler = joblib.load(
+    "https://github.com/synamalhan/ai-crop-optimizer/blob/197954692f89d54c95c5a1ee8a6fcf88f98a8c92/models/scaler.pkl"
+)
 
 
 # Layout for header and navigation
 c1, c2, c3 = st.columns([1, 6, 1])
 c1.page_link("pages/home.py", icon=":material/home:")
 c3.page_link("pages/crop_predict.py", icon=":material/psychiatry:")
-c1.image("assets/logo.png", width=100)
+c1.image(
+    "https://github.com/synamalhan/ai-crop-optimizer/blob/197954692f89d54c95c5a1ee8a6fcf88f98a8c92/assets/logo.png",
+    width=100,
+)
 c2.write("")
 c2.write("")
 c3.write("")
