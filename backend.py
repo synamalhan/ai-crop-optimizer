@@ -3,9 +3,10 @@ import requests
 import pandas as pd
 from scipy.spatial import distance
 import numpy as np
+import streamlit as st
 
 
-api_key = "ba2998b9ecae4744a17195124242707"
+api_key = st.secrets["api-key"]
 
 
 def load_csv():

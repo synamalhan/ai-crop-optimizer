@@ -12,8 +12,6 @@ from sklearn.metrics import (
     f1_score,
 )
 import joblib
-import seaborn as sns
-import matplotlib.pyplot as plt
 
 
 df = bk.load_csv()
