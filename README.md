@@ -1,5 +1,8 @@
 # 🌱🚀 CropGenius: Revolutionizing Agriculture with AI 🚀🌱
 
+## Website Link 
+https://crop-genie.streamlit.app/
+
 ## Overview
 CropGenius is an innovative AI-powered tool designed to help farmers and gardeners maximize their crop yield based on soil quality and weather conditions. Developed during a one-day hackathon at the Headstarter AI Software Engineering Fellowship, CropGenius leverages advanced AI models and comprehensive data analysis to provide precise crop recommendations tailored to specific locations.
 
@@ -46,12 +49,6 @@ To get started with CropGenius, follow these steps:
 3. **Get crop recommendations:**
     - Receive tailored crop suggestions based on the provided data.
     - View in-depth soil type analysis for informed decision-making.
-
-## Project Walkthrough
-Check out our comprehensive walkthrough video to see CropGenius in action: [[Walkthrough Video Link]](https://youtu.be/030IplDlcBU)
-
-## Join the Waitlist
-Be the first to access CropGenius when it goes live by joining our waitlist: [[Waitlist Link]](https://tally.so/r/mRLAbJ)
 
 ## Contributing
 We welcome contributions from the community! If you would like to contribute to CropGenius, please follow these steps:
