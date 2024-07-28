@@ -131,3 +131,36 @@ def get_current_weather(location):
         return temp_c, humidity, rainfall
     else:
         return f"Failed to retrieve data: {response.status_code}"
+
+
+def get_weather_forecasting(location):
+    url = (
+        f"http://api.weatherapi.com/v1/forecast.json?key={api_key}&q={location}&days=3"
+    )
+    response = requests.get(url)
+
+    forecast_data = []
+
+    if response.status_code == 200:
+        data = response.json()
+        forecast_days = data["forecast"]["forecastday"]
+
+        for day in forecast_days:
+            date = day["date"]
+            day_weather = day["day"]
+            avg_temp_c = day_weather["avgtemp_c"]
+            avg_humidity = day_weather["avghumidity"]
+            total_precip_mm = day_weather["totalprecip_mm"]
+
+            forecast_data.append(
+                {
+                    "date": date,
+                    "avg_temp_c": avg_temp_c,
+                    "avg_humidity": avg_humidity,
+                    "total_precip_mm": total_precip_mm,
+                }
+            )
+
+    else:
+        print(f"Failed to retrieve data: {response.status_code}")
+    return forecast_data
