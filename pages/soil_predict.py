@@ -5,6 +5,18 @@ import joblib
 import plotly.express as px
 from sklearn.metrics import r2_score
 import os
+import pickle
+
+
+def load_model_with_pickle(file_path):
+    try:
+        with open(file_path, "rb") as f:
+            model = pickle.load(f)
+        return model
+    except Exception as e:
+        print(f"Error loading model with pickle: {e}")
+        return None
+
 
 current_dir = os.path.dirname(__file__)
 
@@ -13,13 +25,15 @@ current_dir = os.path.dirname(__file__)
 df = bg.load_csv()
 labels = bg.get_labels(df)
 
-xgb_regressor = joblib.load(
+xgb_regressor = load_model_with_pickle(
     (os.path.join(current_dir, "..", "models", "xgb_regressor.pkl"))
 )
-label_encoder = joblib.load(
+label_encoder = load_model_with_pickle(
     (os.path.join(current_dir, "..", "models", "label_encoder.pkl"))
 )
-scaler = joblib.load((os.path.join(current_dir, "..", "models", "scaler.pkl")))
+scaler = load_model_with_pickle(
+    (os.path.join(current_dir, "..", "models", "scaler.pkl"))
+)
 
 
 # Layout for header and navigation

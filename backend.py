@@ -5,11 +5,24 @@ from scipy.spatial import distance
 import numpy as np
 import streamlit as st
 import os
+import pickle
+
+
+@st.cache_resource
+def load_model_with_pickle(file_path):
+    try:
+        with open(file_path, "rb") as f:
+            model = pickle.load(f)
+        return model
+    except Exception as e:
+        print(f"Error loading model with pickle: {e}")
+        return None
 
 
 api_key = st.secrets["api-key"]
 
 
+@st.cache_data
 def load_csv():
     current_dir = os.path.dirname(__file__)
     csv_path = os.path.join(current_dir, "data", "Crop_recommendation.csv")
@@ -29,8 +42,10 @@ def get_labels(df):
 def random_forest_classifier(N, P, K, temp, humid, rain, ph):
     current_dir = os.path.dirname(__file__)
 
-    rf_model = joblib.load((os.path.join(current_dir, "models", "rf_model.pkl")))
-    label_encoder = joblib.load(
+    rf_model = load_model_with_pickle(
+        (os.path.join(current_dir, "models", "rf_model.pkl"))
+    )
+    label_encoder = load_model_with_pickle(
         (os.path.join(current_dir, "models", "label_encoder.pkl"))
     )
 
@@ -54,13 +69,13 @@ def random_forest_classifier(N, P, K, temp, humid, rain, ph):
 def xgb_regressor(temp, humid, rain, crop):
     current_dir = os.path.dirname(__file__)
 
-    xgb_regressor = joblib.load(
+    xgb_regressor = load_model_with_pickle(
         (os.path.join(current_dir, "models", "xgb_regressor.pkl"))
     )
-    label_encoder = joblib.load(
+    label_encoder = load_model_with_pickle(
         (os.path.join(current_dir, "models", "label_encoder.pkl"))
     )
-    scaler = joblib.load((os.path.join(current_dir, "models", "scaler.pkl")))
+    scaler = load_model_with_pickle((os.path.join(current_dir, "models", "scaler.pkl")))
 
     new_soil_data = {
         "temperature": [temp],
