@@ -72,4 +72,3 @@ For any questions or inquiries, please reach out to us at synamalhan22@gmail.com
 
 **CropGenius**: Empowering Farmers and Gardeners with AI for a Sustainable Future.
 
-#AI #MachineLearning #AgriTech #CropOptimization #SoilAnalysis #WeatherData #Streamlit #XGBoost #RandomForest #Hackathon
