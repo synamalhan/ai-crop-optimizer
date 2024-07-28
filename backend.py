@@ -5,7 +5,7 @@ from scipy.spatial import distance
 import numpy as np
 
 
-api_key = ""
+api_key = "ba2998b9ecae4744a17195124242707"
 
 
 def load_csv():
@@ -88,9 +88,6 @@ def soil_type_classifier(N, K, P, pH):
 
     # Convert the closest match to a dictionary
     closest_match_dict = closest_match.to_dict()
-
-    print("Closest matching soil data as dictionary:")
-    print(closest_match_dict)
 
     # Determine the predominant percentage and check for loamy soil
     sand_pct = closest_match_dict.get("Sand %")
