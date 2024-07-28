@@ -33,6 +33,7 @@ if form.form_submit_button("Submit"):
 
     N, P, K, pH = bg.xgb_regressor(temp_c, humid, rain, crop.lower())
 
-    container.subheader(
-        "Best Soil Comp: " + str(N) + " " + str(P) + " " + str(K) + " " + str(pH)
-    )
+    predominant_comp, soil_comp = bg.soil_type_classifier(N, P, K, pH)
+    container.subheader("Best Soil Type: " + str(predominant_comp))
+    with container.expander("View Details..."):
+        st.table(soil_comp)

@@ -1,6 +1,9 @@
 import joblib
 import requests
 import pandas as pd
+from scipy.spatial import distance
+import numpy as np
+
 
 api_key = "ba2998b9ecae4744a17195124242707"
 
@@ -65,8 +68,51 @@ def xgb_regressor(temp, humid, rain, crop):
     return N, P, K, pH
 
 
-def soil_type_classifier():
-    pass
+def soil_type_classifier(N, K, P, pH):
+    new_dataset = pd.read_csv("data/soil_data.csv")
+
+    predicted_npkph = [N, P, K, pH]
+
+    def find_closest_match(predicted_npkph, dataset):
+        dataset_npkph = dataset[["N_NO3 ppm", "P ppm", "K ppm ", "pH"]]
+        distances = distance.cdist([predicted_npkph], dataset_npkph, "euclidean")
+        closest_index = np.argmin(distances)
+        return dataset.iloc[closest_index]
+
+    # Remove any rows with NaNs in the relevant columns
+    new_dataset_clean = new_dataset.dropna(
+        subset=["N_NO3 ppm", "P ppm", "K ppm ", "pH"]
+    )
+
+    closest_match = find_closest_match(predicted_npkph, new_dataset_clean)
+
+    # Convert the closest match to a dictionary
+    closest_match_dict = closest_match.to_dict()
+
+    print("Closest matching soil data as dictionary:")
+    print(closest_match_dict)
+
+    # Determine the predominant percentage and check for loamy soil
+    sand_pct = closest_match_dict.get("Sand %")
+    clay_pct = closest_match_dict.get("Clay %")
+    silt_pct = closest_match_dict.get("Silt %")
+
+    if sand_pct is not None and clay_pct is not None and silt_pct is not None:
+
+        # Check for loamy soil
+        if 30 <= sand_pct <= 50 and 10 <= clay_pct <= 30 and 30 <= silt_pct <= 50:
+            predominant_component = "Loamy Soil"
+        else:
+            max_pct = max(sand_pct, clay_pct, silt_pct)
+            predominant_component = (
+                "Sandy Soil"
+                if sand_pct == max_pct
+                else "Clay Soil" if clay_pct == max_pct else "Silt Soil"
+            )
+
+    else:
+        print("Unable to determine soil composition due to missing data.")
+    return predominant_component, closest_match_dict
 
 
 def get_current_weather(location):
