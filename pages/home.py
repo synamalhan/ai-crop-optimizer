@@ -9,7 +9,9 @@ from PIL import Image
 c1, c2, c3 = st.columns([1, 6, 1])
 
 # Define the image path
-image_path = os.path.join(os.path.dirname(__file__), "/assets/logo.png")
+image_path = (
+    "https://drive.google.com/file/d/13-wHjEFn-s9Up3Aocp2-hfbGNmI5cvbI/view?usp=sharing"
+)
 
 # Check if the image file exists
 if os.path.exists(image_path):
