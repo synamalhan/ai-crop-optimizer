@@ -6,6 +6,7 @@ import plotly.express as px
 from sklearn.metrics import r2_score
 import os
 import pickle
+from xgboost import XGBRegressor
 
 
 def load_model_with_pickle(file_path):
