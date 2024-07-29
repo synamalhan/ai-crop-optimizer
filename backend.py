@@ -6,6 +6,8 @@ import numpy as np
 import streamlit as st
 import os
 import pickle
+from xgboost import XGBRegressor
+
 
 
 @st.cache_resource
